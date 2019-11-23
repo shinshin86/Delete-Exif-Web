@@ -1,6 +1,10 @@
 {
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "fmt": "prettier --write '**/*.{js,json,md,html}'"
+  },
+  "prettier": {
+    "singleQuote": true
   },
   "dependencies": {
     "@yami_beta/react-circular-loading": "^2.0.0",
@@ -24,6 +28,7 @@
     "@babel/preset-stage-0": "7.0.0-beta.39",
     "babel-loader": "8.0.0-beta.0",
     "express": "^4.13.3",
+    "prettier": "^1.19.1",
     "webpack": "^4.41.2",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-hot-middleware": "^2.19.1"
