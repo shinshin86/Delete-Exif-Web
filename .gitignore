@@ -1,0 +1,6 @@
+.DS_Store
+*.un~
+*.pyc
+.*.py.un~
+tmp/
+node_modules/
