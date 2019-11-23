@@ -1,16 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Navbar } from 'react-bootstrap'
 
 const Header = props => {
   return (
-    <Navbar>
-      <Navbar.Header>
-        <Navbar.Brand>
+    <div>
+      <div>
+        <div>
           <a href=''>Delete Exif Web</a>
-        </Navbar.Brand>
-      </Navbar.Header>
-    </Navbar>
+        </div>
+      </div>
+    </div>
   );
 }
 

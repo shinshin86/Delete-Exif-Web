@@ -3,7 +3,6 @@ import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
 import Dropzone from 'react-dropzone'
 import { deleteExif } from '../actions'
-import { Button, Panel } from 'react-bootstrap'
 import { circularLoading }  from '@yami_beta/react-circular-loading'
 
 const styles = {
@@ -103,28 +102,28 @@ class FileUploadForm extends Component {
           </div>
 
           <div className="uploadFile">
-            <Panel>
-              <Panel.Heading>Accepted files</Panel.Heading>
-              <Panel.Body>
+            <div>
+              <div>Accepted files</div>
+              <div>
                 <ul>
                   {this.state.acceptedFiles.map(f => <li key={f.name} style={styles.fileList}>File name : {f.name}<br />File size : {f.size}</li>)}
                 </ul>
-              </Panel.Body>
-              <Panel.Heading>Rejected files</Panel.Heading>
-              <Panel.Body>
+              </div>
+              <div>Rejected files</div>
+              <div>
                 <ul>
                   {this.state.rejectedFiles.map(f => <li key={f.name}>File name : {f.name}<br />File size : {f.size}</li>)}
                 </ul>
-              </Panel.Body>
-            </Panel>
+              </div>
+            </div>
           </div>
 
-          <Button bsStyle="primary" style={styles.fileButton} onClick={() => deleteExif(this.state.acceptedFiles)}>
+          <button bsStyle="primary" style={styles.fileButton} onClick={() => deleteExif(this.state.acceptedFiles)}>
             Upload
-          </Button>
-          <Button bsStyle="primary" style={styles.fileButton} onClick={() => this.handleClearFile()}>
+          </button>
+          <button bsStyle="primary" style={styles.fileButton} onClick={() => this.handleClearFile()}>
             Clear
-          </Button>
+          </button>
         </div>
       </div>
     )
