@@ -14,10 +14,6 @@ const styles = {
     maxWidth: '80%',
     marginLeft: '100px'
   },
-  fileList: {
-    margin: 10,
-    listStyleType: 'none'
-  },
   fileButton: {
     marginTop: 8
   },
@@ -100,28 +96,34 @@ class FileUploadForm extends Component {
           <input type="file" onChange={e => this.handleChangeFile(e)} />
         </div>
         <div>
-          <h3>Accepted files</h3>
-          <ul>
-            {this.state.acceptedFiles.map(f => (
-              <li key={f.name} style={styles.fileList}>
-                File name : {f.name}
-                <br />
-                File size : {f.size}
-              </li>
-            ))}
-          </ul>
-          <div>Rejected files</div>
-          <div>
-            <ul>
-              {this.state.rejectedFiles.map(f => (
-                <li key={f.name}>
-                  File name : {f.name}
-                  <br />
-                  File size : {f.size}
-                </li>
-              ))}
-            </ul>
-          </div>
+          {!!this.state.acceptedFiles.length && (
+            <React.Fragment>
+              <h3>Accepted files</h3>
+              <ul>
+                {this.state.acceptedFiles.map(f => (
+                  <li key={f.name}>
+                    File name : <b>{f.name}</b>
+                    <br />
+                    File size : <b>{f.size}</b>
+                  </li>
+                ))}
+              </ul>
+            </React.Fragment>
+          )}
+          {!!this.state.rejectedFiles.length && (
+            <React.Fragment>
+              <h3>Rejected files</h3>
+              <ul>
+                {this.state.rejectedFiles.map(f => (
+                  <li key={f.name}>
+                    File name : <b>{f.name}</b>
+                    <br />
+                    File size : <b>{f.size}</b>
+                  </li>
+                ))}
+              </ul>
+            </React.Fragment>
+          )}
         </div>
         <button
           bsStyle="primary"
