@@ -15,8 +15,27 @@ app.use(
 );
 app.use(webpackHotMiddleware(compiler));
 
-app.use(function(req, res) {
-  res.sendFile(__dirname + '/index.html');
+// create index.html
+const createHtml = () => `<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.min.css"
+    />
+    <title>Delete Exif Web</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/javascript" src="/static/bundle.js"></script>
+  </body>
+</html>`;
+
+app.use('/', (req, res, next) => {
+  const view = createHtml();
+  res.status(200).send(view);
 });
 
 app.listen(port, function(error) {
