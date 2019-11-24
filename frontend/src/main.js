@@ -9,9 +9,7 @@ const store = configureStore();
 
 render(
   <Provider store={store}>
-    <div>
-      <ExifIndex />
-    </div>
+    <ExifIndex />
   </Provider>,
   document.getElementById('root')
 );

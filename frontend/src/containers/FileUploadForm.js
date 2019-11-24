@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import { deleteExif } from '../actions';
@@ -15,12 +14,8 @@ const styles = {
     maxWidth: '80%',
     marginLeft: '100px'
   },
-  fileList: {
-    margin: 10,
-    listStyleType: 'none'
-  },
   fileButton: {
-    margin: 5
+    marginTop: 8
   },
   dropzoneStyle: {
     width: '100%',
@@ -28,7 +23,8 @@ const styles = {
     borderWidth: '2px',
     borderColor: 'rgb(102, 102, 102)',
     borderStyle: 'dashed',
-    borderRadius: '5px'
+    borderRadius: '5px',
+    padding: '8px'
   }
 };
 const CircularLoading = circularLoading({
@@ -83,68 +79,66 @@ class FileUploadForm extends Component {
 
   render() {
     const { data, deleteExif, isProcessing } = this.props;
-    console.log(data);
+
     return (
-      <div style={styles.body}>
-        <div>
-          <h3>{this.processingResult(data)}</h3>
-          {isProcessing && <CircularLoading style={styles.loadingCircle} />}
-          <Dropzone
-            ref={node => (this.dropzone = node)}
-            accept="image/jpeg,image/jpg"
-            onDrop={(accepted, rejected) => this.handleDrop(accepted, rejected)}
-            style={styles.dropzoneStyle}
-          >
-            Delete Exif File is Here...
-          </Dropzone>
-          <div style={styles.fileButton}>
-            <input type="file" onChange={e => this.handleChangeFile(e)} />
-          </div>
-
-          <div className="uploadFile">
-            <div>
-              <div>Accepted files</div>
-              <div>
-                <ul>
-                  {this.state.acceptedFiles.map(f => (
-                    <li key={f.name} style={styles.fileList}>
-                      File name : {f.name}
-                      <br />
-                      File size : {f.size}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>Rejected files</div>
-              <div>
-                <ul>
-                  {this.state.rejectedFiles.map(f => (
-                    <li key={f.name}>
-                      File name : {f.name}
-                      <br />
-                      File size : {f.size}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <button
-            bsStyle="primary"
-            style={styles.fileButton}
-            onClick={() => deleteExif(this.state.acceptedFiles)}
-          >
-            Upload
-          </button>
-          <button
-            bsStyle="primary"
-            style={styles.fileButton}
-            onClick={() => this.handleClearFile()}
-          >
-            Clear
-          </button>
+      <div>
+        <h2>{this.processingResult(data)}</h2>
+        {isProcessing && <CircularLoading style={styles.loadingCircle} />}
+        <Dropzone
+          ref={node => (this.dropzone = node)}
+          accept="image/jpeg,image/jpg"
+          onDrop={(accepted, rejected) => this.handleDrop(accepted, rejected)}
+          style={styles.dropzoneStyle}
+        >
+          Delete Exif File is Here...
+        </Dropzone>
+        <div style={styles.fileButton}>
+          <input type="file" onChange={e => this.handleChangeFile(e)} />
         </div>
+        <div>
+          {!!this.state.acceptedFiles.length && (
+            <React.Fragment>
+              <h3>Accepted files</h3>
+              <ul>
+                {this.state.acceptedFiles.map(f => (
+                  <li key={f.name}>
+                    File name : <b>{f.name}</b>
+                    <br />
+                    File size : <b>{f.size}</b>
+                  </li>
+                ))}
+              </ul>
+            </React.Fragment>
+          )}
+          {!!this.state.rejectedFiles.length && (
+            <React.Fragment>
+              <h3>Rejected files</h3>
+              <ul>
+                {this.state.rejectedFiles.map(f => (
+                  <li key={f.name}>
+                    File name : <b>{f.name}</b>
+                    <br />
+                    File size : <b>{f.size}</b>
+                  </li>
+                ))}
+              </ul>
+            </React.Fragment>
+          )}
+        </div>
+        <button
+          bsStyle="primary"
+          style={styles.fileButton}
+          onClick={() => deleteExif(this.state.acceptedFiles)}
+        >
+          Upload
+        </button>
+        <button
+          bsStyle="primary"
+          style={styles.fileButton}
+          onClick={() => this.handleClearFile()}
+        >
+          Clear
+        </button>
       </div>
     );
   }
