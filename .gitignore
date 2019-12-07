@@ -4,3 +4,4 @@
 .*.py.un~
 tmp/
 node_modules/
+frontend/public/
