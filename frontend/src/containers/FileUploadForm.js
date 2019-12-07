@@ -126,14 +126,12 @@ class FileUploadForm extends Component {
           )}
         </div>
         <button
-          bsStyle="primary"
           style={styles.fileButton}
           onClick={() => deleteExif(this.state.acceptedFiles)}
         >
           Upload
         </button>
         <button
-          bsStyle="primary"
           style={styles.fileButton}
           onClick={() => this.handleClearFile()}
         >

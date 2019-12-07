@@ -1,41 +1,29 @@
+const path = require('path');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const config = require('./webpack.config');
+const ReactServer = require('./public/server.js').default;
 
-const app = new (require('express'))();
+const express = require('express');
+const app = new express();
 const port = 3000;
+app.use(express.static('public'));
 
-const compiler = webpack(config);
+const publicPath = path.join(__dirname, 'public');
+
+// config[0] === browserConfig ==> TODO
+const compiler = webpack(config[0]);
 app.use(
   webpackDevMiddleware(compiler, {
     noInfo: true,
-    publicPath: config.output.publicPath
+    publicPath
   })
 );
 app.use(webpackHotMiddleware(compiler));
 
-// create index.html
-const createHtml = () => `<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/kognise/water.css@latest/dist/light.min.css"
-    />
-    <title>Delete Exif Web</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="text/javascript" src="/static/bundle.js"></script>
-  </body>
-</html>`;
-
 app.use('/', (req, res, next) => {
-  const view = createHtml();
-  res.status(200).send(view);
+  ReactServer(req, res);
 });
 
 app.listen(port, function(error) {
