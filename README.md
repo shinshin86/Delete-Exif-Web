@@ -53,3 +53,12 @@ NODE_ENV=production bash start.sh
 ```
 
 **Browser access to "localhost:3000"**
+
+
+
+## Memo
+This includes some of my own experiments.
+And this project is not aimed at a practical tool.
+For example...
+
+* Implement SSR
