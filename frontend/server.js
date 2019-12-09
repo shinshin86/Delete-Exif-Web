@@ -1,22 +1,29 @@
-var webpack = require('webpack');
-var webpackDevMiddleware = require('webpack-dev-middleware');
-var webpackHotMiddleware = require('webpack-hot-middleware');
-var config = require('./webpack.config');
+const path = require('path');
+const webpack = require('webpack');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
+const config = require('./webpack.config');
+const ReactServer = require('./public/server.js').default;
 
-var app = new (require('express'))();
-var port = 3000;
+const express = require('express');
+const app = new express();
+const port = 3000;
+app.use(express.static('public'));
 
-var compiler = webpack(config);
+const publicPath = path.join(__dirname, 'public');
+
+// config[0] === browserConfig ==> TODO
+const compiler = webpack(config[0]);
 app.use(
   webpackDevMiddleware(compiler, {
     noInfo: true,
-    publicPath: config.output.publicPath
+    publicPath
   })
 );
 app.use(webpackHotMiddleware(compiler));
 
-app.use(function(req, res) {
-  res.sendFile(__dirname + '/index.html');
+app.use('/', (req, res, next) => {
+  ReactServer(req, res);
 });
 
 app.listen(port, function(error) {

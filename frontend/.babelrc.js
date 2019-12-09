@@ -13,8 +13,15 @@ module.exports = {
         forceAllTransforms: true
       }
     ],
-    '@babel/react',
-    '@babel/stage-0'
+    '@babel/react'
   ],
-  plugins: [cjs && '@babel/transform-modules-commonjs'].filter(Boolean)
+  plugins: [
+    [[cjs && '@babel/transform-modules-commonjs'].filter(Boolean)],
+    [
+      '@babel/plugin-transform-runtime',
+      {
+        regenerator: true
+      }
+    ]
+  ]
 };

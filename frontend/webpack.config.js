@@ -1,34 +1,53 @@
-const path = require('path');
-const webpack = require('webpack');
 const isProduction = process.env.NODE_ENV === 'production';
 
-module.exports = {
+const browserConfig = {
   mode: isProduction ? 'production' : 'development',
-  devtool: isProduction ? false : 'cheap-module-eval-source-map',
-  entry: [
-    'webpack-hot-middleware/client?reload=true',
-    path.join(__dirname, 'src', 'main')
-  ],
+  entry: './src/browser.js',
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/static/'
+    path: __dirname,
+    filename: './public/bundle.js'
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
-    })
-  ],
+  devtool: 'cheap-module-source-map',
   module: {
     rules: [
       {
-        test: /\.js$/,
-        use: ['babel-loader'],
-        exclude: /node_modules/,
-        include: __dirname
+        test: /js$/,
+        exclude: /(node_modules)/,
+        loader: 'babel-loader',
+        query: { presets: ['react-app'] }
       }
     ]
   }
 };
+
+const serverConfig = {
+  mode: isProduction ? 'production' : 'development',
+  entry: './src/server.js',
+  target: 'node',
+  output: {
+    path: __dirname,
+    filename: './public/server.js',
+    libraryTarget: 'commonjs2'
+  },
+  devtool: 'cheap-module-source-map',
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'css-loader/locals'
+          }
+        ]
+      },
+      {
+        test: /js$/,
+        exclude: /(node_modules)/,
+        loader: 'babel-loader',
+        query: { presets: ['react-app'] }
+      }
+    ]
+  }
+};
+
+module.exports = [browserConfig, serverConfig];

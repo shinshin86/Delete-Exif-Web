@@ -45,7 +45,11 @@ yarn run start # npm run start
 ## How to use - Concurrent Start (Recommended)
 
 ```bash
-./start.sh
+# development mode
+NODE_ENV=development bash start.sh
+
+# production mode
+NODE_ENV=production bash start.sh
 ```
 
 **Browser access to "localhost:3000"**
