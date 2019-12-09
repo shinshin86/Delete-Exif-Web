@@ -1,4 +1,3 @@
-const webpack = require('webpack');
 const isProduction = process.env.NODE_ENV === 'production';
 
 const browserConfig = {
@@ -12,22 +11,13 @@ const browserConfig = {
   module: {
     rules: [
       {
-        test: [/\.svg$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-        loader: 'file-loader',
-        options: {
-          name: 'public/media/[name].[ext]',
-          publicPath: url => url.replace(/public/, '')
-        }
-      },
-      {
         test: /js$/,
         exclude: /(node_modules)/,
         loader: 'babel-loader',
         query: { presets: ['react-app'] }
       }
     ]
-  },
-  plugins: []
+  }
 };
 
 const serverConfig = {
@@ -42,15 +32,6 @@ const serverConfig = {
   devtool: 'cheap-module-source-map',
   module: {
     rules: [
-      {
-        test: [/\.svg$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-        loader: 'file-loader',
-        options: {
-          name: 'public/media/[name].[ext]',
-          publicPath: url => url.replace(/public/, ''),
-          emit: false
-        }
-      },
       {
         test: /\.css$/,
         use: [
