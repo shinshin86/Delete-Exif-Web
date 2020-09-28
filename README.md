@@ -35,7 +35,12 @@ Running Frontend's local server
 
 ```bash
 cd frontend
-yarn run start # npm run start
+
+# development mode
+NODE_ENV=development yarn run start # NODE_ENV=development npm run start
+
+# production mode
+NODE_ENV=production yarn run start # NODE_ENV=production npm run start
 ```
 
 **Browser access to "localhost:3000"**
