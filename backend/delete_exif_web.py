@@ -5,7 +5,7 @@ import os
 import uuid
 from flask import Flask, request, make_response, jsonify
 from flask_cors import CORS
-from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
 
 
 app = Flask(__name__)
