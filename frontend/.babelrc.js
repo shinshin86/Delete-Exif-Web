@@ -5,15 +5,14 @@ const prod = NODE_ENV === 'production';
 
 module.exports = {
   presets: [
+    '@babel/react',
     [
-      '@babel/env',
+      '@babel/preset-env',
       {
-        loose: true,
-        modules: false,
-        forceAllTransforms: true
+        useBuiltIns: 'usage',
+        corejs: 3
       }
-    ],
-    '@babel/react'
+    ]
   ],
   plugins: [
     [[cjs && '@babel/transform-modules-commonjs'].filter(Boolean)],
