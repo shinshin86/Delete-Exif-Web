@@ -1,15 +1,63 @@
 # -*- coding: utf-8 -*-
 from PIL import Image
 from PIL.ExifTags import TAGS
+from os import path
 import os
 import uuid
 from flask import Flask, request, make_response, jsonify
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
+import json
 
 
 app = Flask(__name__)
 CORS(app)
+
+
+@app.route('/chunk-upload', methods=['POST'])
+def chunk_upload():
+    chunk_index = request.form['index']
+    total_chunk = request.form['total']
+    file_size = request.form['file_size']
+    filename = request.form['name']
+    chunk = request.files['chunk']
+    save_path = path.join("static", "tmp", secure_filename(filename))
+
+    if path.exists(save_path) and chunk_index == 0:
+        return make_response(("File already exists", 400))
+
+    try:
+        with open(save_path, 'ab') as f:
+            f.seek(int(chunk_index))
+            f.write(chunk.stream.read())
+    except OSError:
+        print("ERROR")
+
+    if int(chunk_index) == int(total_chunk):
+        if path.getsize(save_path) != int(file_size):
+            print(f'File upload error (File size mismatch): {chunk.filename}')
+            return make_response(('File size mismatch', 500))
+        else:
+            print(f'File ({chunk.filename}) has been uploaded successfully')
+    return make_response(("Chunk upload successful", 200))
+
+
+@app.route('/merged-file-download', methods=['POST'])
+def merged_file_download():
+    data = request.get_data()
+    file_name = json.loads(data)["name"]
+    input_path = path.join("static", "tmp", secure_filename(file_name))
+
+    if(delete_exif(input_path)):
+        response = make_response()
+        response.data = open(input_path, "rb").read()
+        response.headers['Content-Disposition'] = 'attachment; filename=' + file_name
+        response.mimetype = "image/jpeg"
+        return response
+    else:
+        msg = "This file does not process"
+        return jsonify({"filename": f.filename,
+                        "msg": msg})
 
 
 @app.route('/upload', methods=['POST'])
