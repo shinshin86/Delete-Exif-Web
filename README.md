@@ -23,6 +23,18 @@ cd frontend
 yarn # or "npm install"
 ```
 
+## How to use - Concurrent Start (Recommended)
+
+```bash
+# development mode
+NODE_ENV=development bash start.sh
+
+# production mode
+NODE_ENV=production bash start.sh
+```
+
+**Browser access to "localhost:3000"**
+
 
 ## How to use
 
@@ -45,20 +57,13 @@ NODE_ENV=production yarn run start # NODE_ENV=production npm run start
 
 **Browser access to "localhost:3000"**
 
+## Development tools
 
+Delete all upload files `backend/static/tmp`
 
-## How to use - Concurrent Start (Recommended)
-
-```bash
-# development mode
-NODE_ENV=development bash start.sh
-
-# production mode
-NODE_ENV=production bash start.sh
+```sh
+bash tmp-delete.sh
 ```
-
-**Browser access to "localhost:3000"**
-
 
 
 ## Memo
