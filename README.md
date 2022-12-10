@@ -72,3 +72,4 @@ And this project is not aimed at a practical tool.
 For example...
 
 * Implement SSR
+* Chunk file upload (By default, this feature is commented out)
