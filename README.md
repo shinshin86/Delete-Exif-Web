@@ -73,3 +73,26 @@ For example...
 
 * Implement SSR
 * Chunk file upload (By default, this feature is commented out)
+
+### Chunk file upload
+
+When trying chunk file upload, please modify as follows.
+
+```diff
+--- a/frontend/src/sagas/index.js
++++ b/frontend/src/sagas/index.js
+@@ -8,11 +8,11 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+ export function* handleDeleteExif() {
+   while (true) {
+     const action = yield take(DELETE_EXIF);
+-    const successFiles = yield call(fileUpload, action.files);
++    // const successFiles = yield call(fileUpload, action.files);
+
+     // chunk file upload
+     // [Note] Not yet fix is done on the return value
+-    // const successFiles = yield call(chunkFileUpload, action.files);
++    const successFiles = yield call(chunkFileUpload, action.files);
+     if (successFiles.length !== 0) {
+       const res = Object.assign(successFiles, { result: true });
+       yield put(successDeleteExif(res));
+```
