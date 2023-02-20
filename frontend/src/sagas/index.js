@@ -62,18 +62,19 @@ const chunkFileUpload = async files => {
   let successFiles = [];
   const url = 'http://localhost:3001/chunk-upload';
 
+  // Create 2MB chunk files
+  const chunkSize = 1024 * 1024 * 2;
+
   await Promise.all(
     files.map(async file => {
-      // Create 2MB chunk files
-      const size = 1024 * 1024 * 2;
       const fileChunks = [];
       let index = 1;
 
-      for (let cur = 0; cur < file.size; cur += size) {
+      for (let cur = 0; cur < file.size; cur += chunkSize) {
         fileChunks.push({
           name: file.name,
           index,
-          chunk: file.slice(cur, cur + size),
+          chunk: file.slice(cur, cur + chunkSize),
           size: file.size
         });
 
